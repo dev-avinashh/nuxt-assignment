@@ -59,13 +59,17 @@ const postStore = usePostStore();
 const searchInput = ref("");
 const sortKey = ref("");
 const sortOrder = ref("asc");
+let timer;
 
 onMounted(() => {
   postStore.fetchPosts();
 });
 
 function handleSearch() {
-  postStore.setSearchQuery(searchInput.value);
+  clearTimeout(timer);
+  setTimeout(() => {
+    postStore.setSearchQuery(searchInput.value);
+  }, 500);
 }
 
 function handleSort() {
