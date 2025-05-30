@@ -64,10 +64,6 @@ const postStore = usePostStore();
 const post = ref(null);
 
 onMounted(async () => {
-  if (postStore.posts.length === 0) {
-    await postStore.fetchPosts();
-  }
-
-  post.value = postStore.fetchPostById(route.params.id);
+  post.value = await postStore.fetchPostById(route.params.id);
 });
 </script>

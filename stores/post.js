@@ -3,7 +3,6 @@ import { defineStore } from "pinia";
 export const usePostStore = defineStore("post", {
   state: () => ({
     posts: [],
-    selectedPost: null,
     searchQuery: "",
     sortKey: "",
     sortOrder: "asc",
@@ -39,11 +38,14 @@ export const usePostStore = defineStore("post", {
     },
 
     async fetchPostById(id) {
-      const res = await fetch(`https://dummyjson.com/posts/${id}`);
-      const data = await res.json();
-      this.selectedPost = data;
-      console.log(selectedPost, "selectedPost");
-      return data;
+      try {
+        const res = await fetch(`https://dummyjson.com/posts/${id}`);
+        const data = await res.json();
+        return data;
+      } catch (error) {
+        console.error("Error fetching post:", error);
+        return null;
+      }
     },
 
     async setSearchQuery(query) {
