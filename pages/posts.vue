@@ -67,7 +67,6 @@
   
   <script setup>
   import { usePostStore } from "~/stores/post";
-  import { onMounted, ref } from "vue";
   import PostCard from "~/components/postCard.vue";
   
 const postStore = usePostStore();

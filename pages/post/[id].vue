@@ -57,7 +57,6 @@
 <script setup>
 import { useRoute } from "vue-router";
 import { usePostStore } from "~/stores/post";
-import { onMounted, ref } from "vue";
 
 const route = useRoute();
 const postStore = usePostStore();
