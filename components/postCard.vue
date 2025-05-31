@@ -7,7 +7,7 @@
   
       <div class="flex items-center justify-between mt-4">
         <NuxtLink
-          :to="`/posts/${post.id}`"
+          :to="`/post/${post.id}`"
           class="text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors"
         >
           Read more →
