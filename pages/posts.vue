@@ -4,7 +4,6 @@
         <div class="flex flex-wrap items-center gap-4">
           <input
             v-model="searchInput"
-            @input="handleSearch"
             type="text"
             placeholder="Search posts..."
             class="px-4 py-2 rounded-xl border shadow w-full sm:w-1/2"
@@ -71,13 +70,13 @@
   import { onMounted, ref } from "vue";
   import PostCard from "~/components/postCard.vue";
   
-  const postStore = usePostStore();
-  const searchInput = ref("");
-  const sortKey = ref("");
-  const sortOrder = ref("asc");
-  let timer;
-  const currentPage = ref(1);
-  const postsPerPage = 6;
+const postStore = usePostStore();
+const searchInput = ref("");
+const sortKey = ref("");
+const sortOrder = ref("asc");
+let timer = ref(null);
+const currentPage = ref(1);
+const postsPerPage = 6;
   
   const paginatedPosts = computed(() => {
     const start = (currentPage.value - 1) * postsPerPage;
@@ -87,19 +86,21 @@
   
   const totalPages = computed(() => {
     return Math.ceil(postStore.posts.length / postsPerPage);
-  });
+ });
+
+
+watch(searchInput, (newValue) => {
+    clearTimeout(timer.value);
+  timer.value = setTimeout(() => {
+    postStore.setSearchQuery(newValue.trim());
+    currentPage.value = 1;
+  }, 400);
+});
   
   onMounted(() => {
     postStore.fetchPosts();
   });
   
-  function handleSearch() {
-    clearTimeout(timer);
-    setTimeout(() => {
-      postStore.setSearchQuery(searchInput.value);
-    }, 500);
-    currentPage.value = 1;
-  }
   
   function handleSort() {
     postStore.setSort(sortKey.value, sortOrder.value);
